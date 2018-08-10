@@ -1,0 +1,23 @@
+from .base import *
+
+DEBUG = True
+
+TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
+
+WSGI_APPLICATION = 'wsgi.application'
+
+MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
+
+INSTALLED_APPS += ('debug_toolbar', )
+
+SECRET_KEY = YOUR_SETUP_KEY
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+}
+
+DEFAULT_FILE_STORAGE = u'storages.backends.overwrite.OverwriteStorage'
+PIPELINE['PIPELINE_ENABLED'] = False

@@ -1,0 +1,10 @@
+Django==2.1
+django-pipeline
+django-bootstrap3
+django-debug-toolbar
+django-extensions
+django-formtools
+django-storages
+python-dateutil
+uwsgi
+requests
