@@ -1,7 +1,16 @@
 from .base import *
 
+import dj_database_url
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY'] = 'heroku.application'
+SECRET_KEY = os.environ['SECRET_KEY']
+
+DATABASE_URL = os.environ['DATABASE_URL']
+DATABASES = {
+    'default': dj_database_url.parse(DATABASE_URL),
+}
+
+DATABASES['default']['CONN_MAX_AGE'] = None
 
 # djangosecure settings
 SECURE_FRAME_DENY = True

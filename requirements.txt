@@ -6,5 +6,6 @@ django-extensions
 django-formtools
 django-storages
 python-dateutil
+dj-database-url
 uwsgi
 requests
