@@ -1,0 +1,26 @@
+[
+  {
+    "model": "polls.question",
+    "pk": 1,
+    "fields": {
+      "question_text": "How old are you ?",
+      "pub_date": "2018-08-11T09:12:14.427Z"
+    }
+  },
+  {
+    "model": "polls.question",
+    "pk": 2,
+    "fields": {
+      "question_text": "Are youn ok ?",
+      "pub_date": "2018-08-11T09:15:16.183Z"
+    }
+  },
+  {
+    "model": "polls.question",
+    "pk": 3,
+    "fields": {
+      "question_text": "How old are you ?",
+      "pub_date": "2018-08-11T09:15:56.162Z"
+    }
+  }
+]

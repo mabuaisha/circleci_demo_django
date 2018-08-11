@@ -7,5 +7,6 @@ django-formtools
 django-storages
 python-dateutil
 dj-database-url
+psycopg2
 uwsgi
 requests

@@ -11,6 +11,6 @@ class QuestionAdmin(django.contrib.admin.ModelAdmin):
 
 
 @django.contrib.admin.register(Choice)
-class QuestionAdmin(django.contrib.admin.ModelAdmin):
+class ChoiceAdmin(django.contrib.admin.ModelAdmin):
     fields = ['question', 'choice_text', 'votes']
     list_display = ('question', 'choice_text', 'votes')

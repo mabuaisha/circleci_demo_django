@@ -1,0 +1,66 @@
+version: 2
+checkout:
+  post:
+    - >
+      if [ -n "$CI_PULL_REQUEST" ]; then
+        PR_ID=${CI_PULL_REQUEST##*/}
+        git fetch origin +refs/pull/$PR_ID/merge:
+        git checkout -qf FETCH_HEAD
+      fi
+jobs:
+  build:
+    working_directory: ~/circleci_demo_django
+    docker:
+      - image: circleci/python:3.7.0
+        environment:
+          DATABASE_URL: postgres://ubuntu@localhost:5432/circle_db
+          DJANGO_SETTINGS_MODULE: settings.testing
+          SECRET_KEY: "e1+*$3)iq#5qww1=3jc17kdw!0tbejinu(*rke7u^jahkj3kse1"
+      - image: circleci/postgres:9.6.2
+        environment:
+          POSTGRES_USER: ubuntu
+          POSTGRES_DB: circle_db
+          POSTGRES_PASSWORD: ""
+    steps:
+      - checkout
+      - restore_cache: # restores saved dependency cache if the Branch key template or requirements.txt files have not changed since the previous run
+          key: circleci_demo_django-{{ .Branch }}-{{ checksum "requirements.txt" }}
+      - run:
+          name: Setup & Install Pip3
+          command: |
+            curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+            sudo python3 get-pip.py
+      - run:
+          name: Install Virtualenv
+          command: |
+            pip3 install --user virtualenv
+      - run:
+          name: Init Virtualenv
+          command: |
+            virtualenv env
+      - run:
+          name: Install tox
+          command: |
+            source env/bin/activate
+            pip3 install tox
+      - run:
+          name: Run Flak8
+          command: |
+            source env/bin/activate
+            tox -e flake8
+      - run:
+          name: Setup Environment Variables
+          command: |
+            echo 'export DJANGO_SETTINGS_MODULE="$DJANGO_SETTINGS_MODULE"' >> $BASH_ENV
+            echo 'export SECRET_KEY="$SECRET_KEY"' >> $BASH_ENV
+            echo 'export DATABASE_URL="$DATABASE_URL"' >> $BASH_ENV
+            source $BASH_ENV
+      - run:
+          name: Run Unit Tests
+          command: |
+            source env/bin/activate
+            tox -e py37
+      - save_cache: # special step to save dependency cache
+          key: circleci_demo_django-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          paths:
+            - "venv"

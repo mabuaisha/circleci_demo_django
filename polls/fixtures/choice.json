@@ -1,0 +1,29 @@
+[
+  {
+    "model": "polls.choice",
+    "pk": 1,
+    "fields": {
+      "question": 1,
+      "choice_text": "I'm fine",
+      "votes": 2
+    }
+  },
+  {
+    "model": "polls.choice",
+    "pk": 2,
+    "fields": {
+      "question": 2,
+      "choice_text": "Not Bad!!",
+      "votes": 4
+    }
+  },
+  {
+    "model": "polls.choice",
+    "pk": 3,
+    "fields": {
+      "question": 3,
+      "choice_text": "28",
+      "votes": 97
+    }
+  }
+]

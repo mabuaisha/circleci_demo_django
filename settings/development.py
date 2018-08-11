@@ -2,7 +2,11 @@ from .base import *
 
 import dj_database_url
 
-# SECURITY WARNING: keep the secret key used in production secret!
+WSGI_APPLICATION = 'heroku.application'
+
+ALLOWED_HOSTS.append(os.environ['ALLOWED_HOST'])
+
+
 SECRET_KEY = os.environ['SECRET_KEY']
 
 DATABASE_URL = os.environ['DATABASE_URL']
