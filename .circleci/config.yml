@@ -12,15 +12,10 @@ jobs:
     working_directory: ~/circleci_demo_django
     docker:
       - image: circleci/python:3.7.0
-        environment:
-          DATABASE_URL: postgres://ubuntu@localhost:5432/circle_db
-          DJANGO_SETTINGS_MODULE: settings.testing
-          SECRET_KEY: "e1+*$3)iq#5qww1=3jc17kdw!0tbejinu(*rke7u^jahkj3kse1"
       - image: circleci/postgres:9.6.2
         environment:
           POSTGRES_USER: ubuntu
           POSTGRES_DB: circle_db
-          POSTGRES_PASSWORD: ""
     steps:
       - checkout
       - restore_cache: # restores saved dependency cache if the Branch key template or requirements.txt files have not changed since the previous run
@@ -63,4 +58,17 @@ jobs:
       - save_cache: # special step to save dependency cache
           key: circleci_demo_django-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
-            - "venv"
+            - "env"
+      - run: bash .circleci/setup-heroku.sh
+      - add_ssh_keys:
+          fingerprints:
+          - $HEROKU_SSH_FINGERPRINT
+      - deploy:
+          name: Deploy to Heroku if tests pass and branch is master
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              heroku maintenance:on --app circleci-demo-django
+              git push heroku-dev master --force
+              heroku run "python manage.py migrate --noinput" --app circleci-demo-django
+              heroku maintenance:off --app circleci-demo-django
+            fi
