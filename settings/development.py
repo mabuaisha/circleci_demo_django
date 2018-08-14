@@ -6,7 +6,7 @@ WSGI_APPLICATION = 'heroku.application'
 
 ALLOWED_HOSTS.append(os.environ['ALLOWED_HOST'])
 
-
+ADMIN_MEDIA_PREFIX = '/static/admin'
 SECRET_KEY = os.environ['SECRET_KEY']
 
 DATABASE_URL = os.environ['DATABASE_URL']
