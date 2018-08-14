@@ -116,6 +116,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
+AWS_CLOUDFRONT_DOMAIN = os.environ.get('AWS_CLOUDFRONT_DOMAIN')
+
 STATIC_URL = os.environ.get('STATIC_URL', '/static/')
 STATIC_ROOT = os.path.join(BASE_DIR, '.static')
 STATICFILES_DIRS = (
@@ -126,7 +128,6 @@ STATICFILES_DIRS = (
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', '')
-AWS_CLOUDFRONT_DOMAIN = urlparse(STATIC_URL).netloc
 
 AWS_S3_SECURE_URLS = True
 AWS_REDUCED_REDUNDANCY = False

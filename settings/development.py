@@ -17,6 +17,8 @@ DATABASES['default']['CONN_MAX_AGE'] = None
 
 
 # Static/Media Resources
+STATIC_URL = 'https://{}/static/'.format(AWS_CLOUDFRONT_DOMAIN)
+
 STATICFILES_STORAGE = 'storage.StaticStorage'
 DEFAULT_FILE_STORAGE = 'storage.MediaStorage'
 MEDIA_URL = 'https://{}/media/'.format(AWS_CLOUDFRONT_DOMAIN)
