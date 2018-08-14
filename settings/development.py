@@ -6,7 +6,6 @@ WSGI_APPLICATION = 'heroku.application'
 
 ALLOWED_HOSTS.append(os.environ['ALLOWED_HOST'])
 
-ADMIN_MEDIA_PREFIX = '/static/admin'
 SECRET_KEY = os.environ['SECRET_KEY']
 
 DATABASE_URL = os.environ['DATABASE_URL']
@@ -15,6 +14,13 @@ DATABASES = {
 }
 
 DATABASES['default']['CONN_MAX_AGE'] = None
+
+
+# Static/Media Resources
+STATICFILES_STORAGE = 'storage.StaticStorage'
+DEFAULT_FILE_STORAGE = 'storage.MediaStorage'
+MEDIA_URL = 'https://{}/media/'.format(AWS_CLOUDFRONT_DOMAIN)
+ADMIN_MEDIA_PREFIX = ''.join([STATIC_URL, 'admin/'])
 
 # djangosecure settings
 SECURE_FRAME_DENY = True

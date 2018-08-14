@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from urllib.parse import urlparse
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pipeline',
+    'storages',
     'polls',
+
 ]
 
 MIDDLEWARE = [
@@ -113,12 +116,25 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
 STATIC_URL = os.environ.get('STATIC_URL', '/static/')
 STATIC_ROOT = os.path.join(BASE_DIR, '.static')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+# Configuration for django-storages to use S3
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', '')
+AWS_CLOUDFRONT_DOMAIN = urlparse(STATIC_URL).netloc
+
+AWS_S3_SECURE_URLS = True
+AWS_REDUCED_REDUNDANCY = False
+AWS_PRELOAD_METADATA = True
+AWS_IS_GZIPPED = True
+AWS_AUTO_CREATE_BUCKET = True
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_FILE_OVERWRITE = True
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
