@@ -93,3 +93,5 @@ db.sqlite3
 *.sqlite
 settings/local.py
 *.sqlite3
+
+environment
