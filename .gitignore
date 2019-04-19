@@ -95,3 +95,7 @@ settings/local.py
 *.sqlite3
 
 environment
+keys/
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
