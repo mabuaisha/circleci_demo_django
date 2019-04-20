@@ -12,3 +12,6 @@ class PollsTestCase(django.test.TestCase):
 
     def test_choice_count(self):
         self.assertEqual(Choice.objects.count(), 3)
+
+    def test_dummy(self):
+        self.assertEqual('1', '2')
